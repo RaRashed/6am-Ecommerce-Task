@@ -32,6 +32,9 @@
                                         <li class="has-child-item closed-item">
                                             <a href="{{route('product.index') }}"><i class="fa fa-th" aria-hidden="true"></i><span>Product</span></a>
                                         </li>
+                                        <li class="has-child-item closed-item">
+                                            <a href="{{route('coupon.index') }}"><i class="fa fa-th" aria-hidden="true"></i><span>Coupon</span></a>
+                                        </li>
                                           <!--
                                          <li class="has-child-item closed-item">
                                     <a href=""><i class="fa fa-th" aria-hidden="true"></i><span>Manage Exams</span></a>

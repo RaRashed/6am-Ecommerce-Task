@@ -26,6 +26,8 @@ Route::get('admin/home', 'HomeController@adminHome')->name('admin.home')->middle
 Route::resource('category', 'CategoryController');
 Route::resource('brand','BrandController');
 Route::resource('product','ProductController');
-Route::get('/linkstorage', function () {
-    Artisan::call('storage:link');
-});
+Route::resource('coupon','CouponContoller');
+
+Route::delete('image/{img_id}/delete','ImageController@Imagedestroy')->name('destroyimage');
+
+
