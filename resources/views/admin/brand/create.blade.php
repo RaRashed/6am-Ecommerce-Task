@@ -6,8 +6,8 @@
                     <!-- leftside content header -->
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><i class="fa fa-home" aria-hidden="true"></i><a href="route('admin.home')">Dashboard</a></li>
-                            <li><a href="{{route('category.create')}}">New Category</a></li>
+                            <li><i class="fa fa-home" aria-hidden="true"></i><a href="{{ route('admin.home') }}">Dashboard</a></li>
+                            <li><a href="">New Brand</a></li>
 
                         </ul>
                     </div>
@@ -27,40 +27,21 @@
                     <div class="col-sm-12 col-lg-9">
                     	 <div class="modal-body">
 
-      	<form action="{{route('category.store')}}" method="POST">
+      	<form action="{{route('brand.store')}}" method="POST">
 
       		@csrf
 
       	<div class="row">
       		<div class="col-sm-8">
       			<div class="form-group">
-      				<label>Category Name</label>
+      				<label>Brand Name</label>
 
-      				<input type="text" name="name" placeholder="Enter category name" class="form-control" required>
+      				<input type="text" name="name" placeholder="Enter Brand name" class="form-control" required>
 
 
       			</div>
 
       		</div>
-              <div class="col-sm-8">
-                <div class="form-group">
-                    <label>Parent Category</label>
-
-
-                  <select name="category_id" class="form-control">
-                    <option value="">Please select a parent category</option>
-                    @foreach($categories as $category)
-
-                    <option value="{{$category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                   </select>
-
-
-
-
-                </div>
-
-            </div>
 
               <div class="col-sm-8">
                 <div class="form-group">

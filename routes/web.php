@@ -24,3 +24,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('admin/home', 'HomeController@adminHome')->name('admin.home')->middleware('role');
 Route::resource('category', 'CategoryController');
+Route::resource('brand','BrandController');
+Route::resource('product','ProductController');
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+});

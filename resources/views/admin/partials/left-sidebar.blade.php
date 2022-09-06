@@ -16,7 +16,7 @@
                                 <li class="active-item"><a href="{{route('admin.home')}}"><i class="fa fa-home" aria-hidden="true"></i><span>Dashboard</span></a></li>
                                 <!--UI ELEMENTENTS-->
                                <li class="has-child-item closed-item">
-                                    <a href="{{route('category.create')}}"><i class="fa fa-th" aria-hidden="true"></i><span>Category</span></a>
+                                    <a href="{{route('category.index')}}"><i class="fa fa-th" aria-hidden="true"></i><span>Category</span></a>
                                     <!-- <ul class="nav child-nav level-1">
                                         <li><a href="ui-elements_panels.html">Panels</a></li>
                                         <li><a href="ui-elements_accordions.html">Accordions</a></li>
@@ -25,7 +25,14 @@
                                     </ul>
                                     -->
 
-                                    <!--         </li>
+                                          </li>
+                                          <li class="has-child-item closed-item">
+                                            <a href="{{route('brand.index') }}"><i class="fa fa-th" aria-hidden="true"></i><span>Brand</span></a>
+                                        </li>
+                                        <li class="has-child-item closed-item">
+                                            <a href="{{route('product.index') }}"><i class="fa fa-th" aria-hidden="true"></i><span>Product</span></a>
+                                        </li>
+                                          <!--
                                          <li class="has-child-item closed-item">
                                     <a href=""><i class="fa fa-th" aria-hidden="true"></i><span>Manage Exams</span></a>
                                 </li>

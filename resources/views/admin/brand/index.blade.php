@@ -6,17 +6,17 @@
                     <!-- leftside content header -->
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><i class="fa fa-home" aria-hidden="true"></i><a href="index.php">Dashboard</a></li>
-                            <li><a href="">Category</a></li>
+                            <li><i class="fa fa-home" aria-hidden="true"></i><a href="{{ route('admin.home') }}">Dashboard</a></li>
+                            <li><a href="">Brand</a></li>
 
                         </ul>
                     </div>
                 </div>
                   <div class="row animated fadeInUp">
                     <div class="col-sm-12 col-lg-9">
-                          <h4 class="section-subtitle"><b>Category</b></h4>
+                          <h4 class="section-subtitle"><b>Brand</b></h4>
                           <div>
-                          <a class="btn btn-primary" href="{{ route('category.create') }}">Addnew</a>
+                          <a class="btn btn-primary" href="{{ route('brand.create') }}">Addnew</a>
                           </div>
                           @if ($message = Session::get('success'))
 
@@ -35,43 +35,27 @@
 
                         		<thead>
                         			<th>#</th>
-                        			<th>Category Name</th>
-                                     <th>Sub Category</th>
-
-                              <th>Action</th>
+                        			<th>Brand Name</th>
+                                     <th>Action</th>
                         		</thead>
 
 
                         		<tbody>
-                              @foreach($categories as $key => $category)
+                              @foreach($brands as $key => $brand)
                               <tr>
                               <td>{{$key+1}}</td>
-                              <td>{{$category->name}}</td>
-                               <td>
-                                @if($category->category_id ==null)
-                                Primary Category
-
-                                @else
-                                @foreach ($category->childrenCategories as $childCategory)
-                                {{ $childCategory->name }}
-                                @endforeach
-
-                                @endif
-
-
-
-                               </td>
+                              <td>{{$brand->name}}</td>
 
                                 <td>
-                                    <form action="{{ route('category.destroy',$category->id) }}" method="POST">
+                                    <form action="{{ route('brand.destroy',$brand->id) }}" method="POST">
 
 
 
-                                        <a class="btn btn-info" href="{{ route('category.show',$category->id) }}"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-info" href="{{ route('brand.show',$brand->id) }}"><i class="fa fa-eye"></i></a>
 
 
 
-                                        <a class="btn btn-primary" href="{{ route('category.edit',$category->id) }}"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-primary" href="{{ route('brand.edit',$brand->id) }}"><i class="fa fa-edit"></i></a>
 
 
 
@@ -94,10 +78,8 @@
 
                         		<tfoot>
                         		  <th>#</th>
-                              <th>Category Name</th>
-                              <th>Sub Category</th>
-
-                              <th>Action</th>
+                             <th>Brand Name</th>
+                               <th>Action</th>
                         		</tfoot>
                         	</table>
 

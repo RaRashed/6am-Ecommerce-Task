@@ -130,6 +130,6 @@ class CategoryController extends Controller
 
         return redirect()->route('category.index')
 
-                        ->with('success','Product deleted successfully');
+                        ->with('success','Category deleted successfully');
     }
 }

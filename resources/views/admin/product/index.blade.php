@@ -6,7 +6,7 @@
                     <!-- leftside content header -->
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><i class="fa fa-home" aria-hidden="true"></i><a href="index.php">Dashboard</a></li>
+                            <li><i class="fa fa-home" aria-hidden="true"></i><a href="{{ route('admin.home') }}">Dashboard</a></li>
                             <li><a href="">Category</a></li>
 
                         </ul>
@@ -14,9 +14,9 @@
                 </div>
                   <div class="row animated fadeInUp">
                     <div class="col-sm-12 col-lg-9">
-                          <h4 class="section-subtitle"><b>Category</b></h4>
+                          <h4 class="section-subtitle"><b>Product</b></h4>
                           <div>
-                          <a class="btn btn-primary" href="{{ route('category.create') }}">Addnew</a>
+                          <a class="btn btn-primary" href="{{ route('product.create') }}">Addnew</a>
                           </div>
                           @if ($message = Session::get('success'))
 
@@ -35,43 +35,37 @@
 
                         		<thead>
                         			<th>#</th>
-                        			<th>Category Name</th>
-                                     <th>Sub Category</th>
+                        			<th>Product Name</th>
+                                     <th>Product Category</th>
+                                     <th>Product Brand</th>
+                                     <th>Product Price</th>
+                                     <th>Product Quantity</th>
 
-                              <th>Action</th>
+                                      <th>Action</th>
                         		</thead>
 
 
                         		<tbody>
-                              @foreach($categories as $key => $category)
+                              @foreach($products as $key => $product)
                               <tr>
                               <td>{{$key+1}}</td>
-                              <td>{{$category->name}}</td>
-                               <td>
-                                @if($category->category_id ==null)
-                                Primary Category
+                              <td>{{$product->name}}</td>
+                             <td>{{ $product->category->name }}</td>
+                             <td>{{ $product->brand->name }}</td>
+                             <td>{{ $product->price }}</td>
+                             <td>{{ $product->quantity }}</td>
 
-                                @else
-                                @foreach ($category->childrenCategories as $childCategory)
-                                {{ $childCategory->name }}
-                                @endforeach
-
-                                @endif
-
-
-
-                               </td>
 
                                 <td>
-                                    <form action="{{ route('category.destroy',$category->id) }}" method="POST">
+                                    <form action="{{ route('product.destroy',$product->id) }}" method="POST">
 
 
 
-                                        <a class="btn btn-info" href="{{ route('category.show',$category->id) }}"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-info" href="{{ route('product.show',$product->id) }}"><i class="fa fa-eye"></i></a>
 
 
 
-                                        <a class="btn btn-primary" href="{{ route('category.edit',$category->id) }}"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-primary" href="{{ route('product.edit',$product->id) }}"><i class="fa fa-edit"></i></a>
 
 
 
@@ -94,8 +88,11 @@
 
                         		<tfoot>
                         		  <th>#</th>
-                              <th>Category Name</th>
-                              <th>Sub Category</th>
+                                  <th>Product Name</th>
+                                  <th>Product Category</th>
+                                  <th>Product Brand</th>
+                                  <th>Product Price</th>
+                                  <th>Product Quantity</th>
 
                               <th>Action</th>
                         		</tfoot>
