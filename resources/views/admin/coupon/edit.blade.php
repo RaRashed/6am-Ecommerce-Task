@@ -7,7 +7,7 @@
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
                             <li><i class="fa fa-home" aria-hidden="true"></i><a href="{{ route('admin.home') }}">Dashboard</a></li>
-                            <li><a>Edit brand</a></li>
+                            <li><a>Edit coupon</a></li>
 
                         </ul>
                     </div>
@@ -27,7 +27,7 @@
                     <div class="col-sm-12 col-lg-9">
                     	 <div class="modal-body">
 
-      	<form action="{{route('brand.update',$brand->id)}}" method="POST">
+      	<form action="{{route('coupon.update',$coupon->id)}}" method="POST">
 
       		@csrf
             @method('put')
@@ -35,14 +35,34 @@
       	<div class="row">
       		<div class="col-sm-8">
       			<div class="form-group">
-      				<label>brand Name</label>
+      				<label>coupon Name</label>
 
-      				<input type="text" name="name" value="{{ $brand->name }}" class="form-control" required>
+      				<input type="text" name="name" value="{{ $coupon->name }}" class="form-control" required>
 
 
       			</div>
 
       		</div>
+              <div class="col-sm-8">
+                <div class="form-group">
+                    <label>Validity</label>
+
+                    <input type="date" name="validity" value="{{ $coupon->validity }}" class="form-control" required>
+
+
+                </div>
+
+            </div>
+            <div class="col-sm-8">
+                <div class="form-group">
+                    <label>coupon Discount</label>
+
+                    <input type="number" name="discount" value="{{ $coupon->discount }}" class="form-control" required>
+
+
+                </div>
+
+            </div>
 
               <div class="col-sm-8">
                 <div class="form-group">

@@ -119,7 +119,7 @@
                 <div class="form-group">
                     <label>Product Images</label>
 
-                    <input type="file" name="images[]" multiple placeholder="Enter category name" class="form-control" required>
+                    <input type="file" name="images[]" multiple placeholder="Enter category name" class="form-control">
 
 
                 </div>
@@ -144,11 +144,12 @@
 
                     <table class="table table-bordered">
                         <tr>
-                            @foreach ($product->productimages as $img )
 
+                            @foreach ($product->productimages as $img )
                             <td>
 
                                 <p class="mt-2">
+
 
                                     <form method="post" action="{{route('destroyimage', ['img_id' => $img->id ]) }}">
                                         @csrf
@@ -156,12 +157,16 @@
                                     <img src="{{asset('storage/'.$img->prod_image)}}" width="100px" height="100px" alt="">
 
                                       <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                    </form>
+
 
                                 </p>
-                            </form>
+
+
 
                             </td>
                             @endforeach
+
 
 
 

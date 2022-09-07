@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,13 @@ Route::resource('category', 'CategoryController');
 Route::resource('brand','BrandController');
 Route::resource('product','ProductController');
 Route::resource('coupon','CouponContoller');
+route::get('frontend','FrontendController@index')->name('frontend');
+route::get('frontend/cart','FrontendController@cart')->name('cart');
+
+Route::get('add-to-cart/{id}', 'FrontendController@addToCart');
+
+Route::post('addcoupon', 'FrontendController@applyCoupon')->name('addcoupon');
+Route::get('checkout', 'FrontendController@checkout')->name('checkout');
 
 Route::delete('image/{img_id}/delete','ImageController@Imagedestroy')->name('destroyimage');
 

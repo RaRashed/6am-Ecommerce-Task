@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    protected $product;
+    protected $category;
+    protected $brand;
+    public function __construct(Product $product, Category $category,Brand $brand)
+    {
+        $this->product = $product;
+        $this->category=$category;
+        $this->brand=$brand;
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +28,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        $products=Product::all();
+
+        $categories = $this->category::all();
+       // $products=Product::all();
+       $products = $this->product::all();
         return view('admin.product.index',['categories'=>$categories,'products'=>$products]);
     }
 
@@ -30,8 +42,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $brands= Brand::all();
+        $categories = $this->category::all();
+        $brands= $this->brand::all();
         return view('admin.product.create',['categories'=>$categories,'brands'=>$brands]);
     }
 
@@ -88,7 +100,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
+        $product = $this->product::find($id);
         //dd($product->productimages);
        return view('admin.product.show',['product'=>$product]);
     }
@@ -101,9 +113,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product=Product::find($id);
-        $categories=Category::all();
-        $brands= Brand::all();
+        $product=$this->product::find($id);
+        $categories=$this->category::all();
+        $brands= $this->brand::all();
         return view('admin.product.edit',['categories'=>$categories,'brands' => $brands,'product'=>$product]);
 
     }
@@ -127,7 +139,7 @@ class ProductController extends Controller
            ]);
 
 
-        $product = Product::find($id);
+        $product = $this->product::find($id);
         $product->name = $request->name;
         $product->category_id = $request->category_id;
         $product->brand_id = $request->brand_id;
@@ -161,7 +173,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $data=Product::find($id);
+        $data=$this->product::find($id);
 
         $data->delete();
 

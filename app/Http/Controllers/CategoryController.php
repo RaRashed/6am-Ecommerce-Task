@@ -123,8 +123,8 @@ class CategoryController extends Controller
     public function destroy($id)
     {
 
-        $product = Category::find($id);
-        $product->delete();
+        $categgory = Category::find($id);
+        $categgory->delete();
 
 
 

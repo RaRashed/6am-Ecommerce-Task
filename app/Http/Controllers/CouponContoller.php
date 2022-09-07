@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class CouponContoller extends Controller
 {
+    protected $coupon;
+    public function __construct(Coupon $coupon)
+    {
+        $this->coupon=$coupon;
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +21,7 @@ class CouponContoller extends Controller
      */
     public function index()
     {
-        $coupons = Coupon::all();
+        $coupons = $this->coupon::all();
         return view('admin.coupon.index',['coupons'=> $coupons]);
     }
 
@@ -60,7 +66,8 @@ class CouponContoller extends Controller
      */
     public function show($id)
     {
-        //
+        $coupon =$this->coupon::find($id);
+        return view('admin.coupon.show',['coupon' =>$coupon]);
     }
 
     /**
@@ -71,7 +78,9 @@ class CouponContoller extends Controller
      */
     public function edit($id)
     {
-        //
+        $coupon=$this->coupon::find($id);
+        return view('admin.coupon.edit',['coupon'=>$coupon]);
+
     }
 
     /**
@@ -83,8 +92,26 @@ class CouponContoller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+
+            'name' => 'required',
+            'validity'=>'required',
+            'discount'=>'required'
+
+
+        ]);
+
+
+         $coupon = $this->coupon::find($id);
+        $coupon->update($request->all());
+
+
+
+        return redirect()->route('coupon.index')
+
+                        ->with('success','Coupon updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -94,6 +121,14 @@ class CouponContoller extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $coupon = $this->coupon::find($id);
+        $coupon->delete();
+
+
+
+        return redirect()->route('coupon.index')
+
+                        ->with('success','Coupon deleted successfully');
     }
 }
