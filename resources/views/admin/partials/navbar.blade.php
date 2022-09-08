@@ -14,13 +14,13 @@
             <div class="rightside-header">
                 <div class="header-middle"></div>
                 <!--SEARCH HEADERBOX-->
-              
+
                 <!--NOCITE HEADERBOX-->
                 <div class="header-section hidden-xs" id="notice-headerbox">
                     <!--check list-->
-                  
+
                     <!--messages-->
-                   
+
                     <!--alerts notices-->
                     <div class="notice" id="alerts-notice">
                         <i class="fa fa-bell-o" aria-hidden="true"><span class="badge badge-xs badge-top-right x-danger">7</span></i>
@@ -96,7 +96,7 @@
                             <img alt="profile photo" src="{{asset('assets/images/rashed1.jpg')}}" />
                         </div>
                         <div class="user-info">
-                            <span class="user-name">{{ Auth::user()->fname }} {{ Auth::user()->lname }}</span>
+                            <span class="user-name">{{ Auth::user()->name }}</span>
                             <span class="user-profile">Admin</span>
                         </div>
                         <i class="fa fa-plus icon-open" aria-hidden="true"></i>

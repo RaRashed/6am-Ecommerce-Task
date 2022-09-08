@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,7 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend.index');
+        $products = Product::all();
+        return view('frontend.index',['products'=>$products]);
     }
     public function adminHome()
 

@@ -23,13 +23,21 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('admin/home', 'HomeController@adminHome')->name('admin.home')->middleware('role');
-Route::resource('category', 'CategoryController');
-Route::resource('brand','BrandController');
+Route::group(['prefix' => 'admin',  'middleware' => 'role'], function()
+{
+    Route::get('/', 'HomeController@adminHome')->name('admin.home');
+    Route::resource('category', 'CategoryController');
+    Route::resource('brand','BrandController');
 Route::resource('product','ProductController');
 Route::resource('coupon','CouponContoller');
-route::get('frontend','FrontendController@index')->name('frontend');
-route::get('frontend/cart','FrontendController@cart')->name('cart');
+Route::delete('image/{img_id}/delete','ImageController@Imagedestroy')->name('destroyimage');
+});
+
+
+Route::group(['prefix' => 'frontend',  'middleware' => 'role'], function()
+{
+    route::get('/','FrontendController@index')->name('frontend');
+route::get('cart','FrontendController@cart')->name('cart');
 
 Route::get('add-to-cart/{id}', 'FrontendController@addToCart');
 
@@ -39,7 +47,17 @@ Route::get('checkout', 'FrontendController@checkout')->name('checkout');
 Route::post('update-cart', 'FrontendController@update');
 Route::post('remove-from-cart', 'FrontendController@remove');
 
+});
 
-Route::delete('image/{img_id}/delete','ImageController@Imagedestroy')->name('destroyimage');
+
+
+
+
+
+
+
+
+
+
 
 
