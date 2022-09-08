@@ -34,11 +34,40 @@
           </li>
         </ul>
         <div class="user_option">
-          <a href="">
-            <i class="fa fa-user" aria-hidden="true"></i>
-            <span>
-              Login
-            </span>
+
+
+
+
+            @if (Route::has('login'))
+            <div class="top-right links">
+                @auth
+
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+
+                @else
+                    <a href="{{ route('login') }}"> <i class="fa fa-user" aria-hidden="true"></i>Login</a>
+
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}"> <i class="fa fa-registered" aria-hidden="true"></i>
+                            Register</a>
+                    @endif
+                @endauth
+            </div>
+        @endif
           </a>
           <a href="{{ route('cart') }}">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>

@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Coupon;
 use App\Product;
-use Illuminate\Contracts\Session\Session as SessionSession;
+
 use Session;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -26,7 +27,8 @@ class FrontendController extends Controller
     }
     public function cart()
     {
-        return view('frontend.cart');
+        $products=$this->product::all();
+        return view('frontend.cart',['products' => $products]);
     }
     public function addToCart($id)
     {
@@ -39,12 +41,13 @@ class FrontendController extends Controller
         }
 
         $cart = session()->get('cart');
+        //dd($cart);
 
 
 
 
 
-        // cart  increment quantity
+        // cart increment quantity
         if(isset($cart[$id])) {
 
             $cart[$id]['quantity']++;
@@ -57,10 +60,11 @@ class FrontendController extends Controller
 
         // if item not exist in cart then add to cart with quantity = 1
         $cart[$id] = [
+
             "name" => $product->name,
             "quantity" => 1,
-            "price" => $product->price,
-            "photo" => $product->photo
+            "price" => $product->price
+            //"prod_image" => $product->id,
         ];
 
         session()->put('cart', $cart);
@@ -72,15 +76,14 @@ class FrontendController extends Controller
     public function applyCoupon(Request $request)
 
     {
-       $oldCart = Session::get('cart');
-       //dd($oldCart);
+
        $coupon =Session::get('coupon');
        //dd($coupon);
        $coupon = Coupon::where('name', $request->coupon)->first();
 
 
        if(!$coupon){
-           return redirect()->back()->with('fail', 'Coupon Code Not Found');
+           return redirect()->back()->with('warning', 'Coupon Code Not Found');
        }
        $coupons =[
         'name' => $coupon->name,
@@ -91,7 +94,20 @@ class FrontendController extends Controller
        ];
 
        session()->put('coupon',$coupons);
+       $check_coupon = session('coupon');
+
+       if($check_coupon && $check_coupon['validity'] >= Carbon::now()){
+
         return redirect()->back()->with('success', 'Coupon Has Been Applied');
+
+       }
+
+    else{
+
+        return redirect()->back()->with('fail','Coupon code expired');
+      }
+
+
     }
 
 
@@ -104,5 +120,27 @@ class FrontendController extends Controller
     {
         $coupons=Coupon::all();
         return view('frontend.checkout',['coupons'=>$coupons]);
+    }
+
+    public function update(Request $request)
+    {
+        if($request->id and $request->quantity)
+        {
+            $cart = session()->get('cart');
+            $cart[$request->id]["quantity"] = $request->quantity;
+            session()->put('cart', $cart);
+            return redirect()->back()->with('success', 'Cart updated successfully');
+        }
+    }
+    public function remove(Request $request)
+    {
+        if($request->id) {
+            $cart = session()->get('cart');
+            if(isset($cart[$request->id])) {
+                unset($cart[$request->id]);
+                session()->put('cart', $cart);
+            }
+           return redirect()->back()->with('success', 'Product removed successfully');
+        }
     }
 }

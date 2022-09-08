@@ -6,7 +6,19 @@
         Latest Products
       </h2>
     </div>
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success">
+
+        <p>{{ $message }}</p>
+
+    </div>
+
+
+
+@endif
+
     <div class="row">
+
       @foreach($products as $product)
       <div class="col-sm-6 col-md-4 col-lg-3">
         <div class="box">

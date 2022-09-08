@@ -4,12 +4,15 @@
 
     <table id="cart" class="table table-hover table-condensed">
         @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
 
-        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
 
-            <p>{{ $message }}</p>
+            <strong>{{ $message }}</strong>
 
         </div>
+
+
 
     @endif
     @if ($message = Session::get('fail'))
@@ -19,6 +22,18 @@
         <p>{{ $message }}</p>
 
     </div>
+
+@endif
+
+@if ($message = Session::get('warning'))
+
+<div class="alert alert-warning alert-block">
+
+	<button type="button" class="close" data-dismiss="alert">×</button>
+
+	<strong>{{ $message }}</strong>
+
+</div>
 
 @endif
         <thead>
@@ -39,7 +54,24 @@
                 <tr>
                     <td data-th="Product">
                         <div class="row">
-                            <div class="col-sm-3 hidden-xs"><img src="{{ $details['photo'] }}" width="100" height="100" class="img-responsive"/></div>
+                            @foreach ($products as $product )
+                            @if($product->id == $id)
+                            @foreach($product->productimages as $index => $img)
+                            @if($index>0 ?'active' : '')
+                            <img class="img-fluid hide" src="{{asset('storage/'.$img->prod_image)}}" width="150px" height="100px" alt="">
+                            @else
+                            <img class="img-fluid" src="{{asset('storage/'.$img->prod_image)}}" width="150px" height="100px" alt="">
+
+                            @endif
+
+
+
+                            @endforeach
+                            @endif
+
+                            @endforeach
+
+                          <!-- <div class="col-sm-3 hidden-xs"><img src="{{-- $details['prod_image'] --}}" width="100" height="100" class="img-responsive"/></div> -->
                             <div class="col-sm-9">
                                 <h4 class="nomargin">{{ $details['name'] }}</h4>
                             </div>
@@ -52,6 +84,7 @@
                     </td>
                     <td data-th="Subtotal" class="text-center">${{ $details['price'] * $details['quantity'] }}</td>
                     <td class="actions" data-th="">
+
                         <button class="btn btn-info btn-sm update-cart" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button>
                         <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i class="fa fa-trash-o"></i></button>
                     </td>
@@ -69,11 +102,25 @@
             <td class="hidden-xs text-center"><strong>
                 total
                 @if($coupon = Session::get('coupon'))
-                {{ $total - $coupon['discount'] }}
+
+                @if($coupon['validity'] >= Carbon\Carbon::now()->format('Y-m-d'))
+                 {{ $total - $coupon['discount'] }}
+
+                 @else
+                 {{ $total }}
+
+
+
+             @endif
+
+
+
                 @else
 
                 {{ $total }}
                 @endif
+
+
 
 
 
@@ -86,9 +133,56 @@
    <form action="{{ route('addcoupon')}}" method="POST">
     @csrf
 
-    <label for="">Coupon Code</label>
+    <label for=""><strong>Coupon Code</strong></label>
     <input type="text" name="coupon" required>
-    <button type="submit">Apply</button>
+    <button type="submit" class="btn btn-primary">Apply</button>
    </form>
-    <a href="{{ url('checkout') }}" class="btn btn-warning"> Check Out <i class="fa fa-angle-right"></i></a>
+
+@endsection
+@section('styles')
+<style>
+    .hide{
+        display: none;
+    }
+</style>
+@endsection
+@section('scripts')
+
+
+    <script type="text/javascript">
+
+        $(".update-cart").click(function (e) {
+           e.preventDefault();
+
+           var ele = $(this);
+
+            $.ajax({
+               url: '{{ url('update-cart') }}',
+               method: "post",
+               data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: ele.parents("tr").find(".quantity").val()},
+               success: function (response) {
+                   window.location.reload();
+               }
+            });
+        });
+
+        $(".remove-from-cart").click(function (e) {
+            e.preventDefault();
+
+            var ele = $(this);
+
+            if(confirm("Are you sure")) {
+                $.ajax({
+                    url: '{{ url('remove-from-cart') }}',
+                    method: "post",
+                    data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id")},
+                    success: function (response) {
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+
+    </script>
+
 @endsection

@@ -36,6 +36,10 @@ Route::get('add-to-cart/{id}', 'FrontendController@addToCart');
 Route::post('addcoupon', 'FrontendController@applyCoupon')->name('addcoupon');
 Route::get('checkout', 'FrontendController@checkout')->name('checkout');
 
+Route::post('update-cart', 'FrontendController@update');
+Route::post('remove-from-cart', 'FrontendController@remove');
+
+
 Route::delete('image/{img_id}/delete','ImageController@Imagedestroy')->name('destroyimage');
 
 
